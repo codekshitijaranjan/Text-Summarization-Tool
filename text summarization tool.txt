@@ -1,0 +1,74 @@
+#import the libraries
+import nltk
+from nltk.tokenize import sent_tokenize
+from nltk.stem import PorterStenner
+from nltk.corpus import stopwords
+from heapq import nlargest
+
+
+#Download the required stiowords and tokenizers
+nltk.download( 'stopwords')
+nltk.download( 'punkt')
+
+
+[nltk_data] Downloading package stopwords to /root/nltk_data...
+[nltk_data] Unzipping corpora/stopwords.zip.
+[nltk_data] Downloading package punkt to /root/nltk_data...
+[nltk_data] Unzipping tokenizers/punkt.zip.
+true
+
+#Create a simple text to summarize
+text = ---
+The quick brown for jumps over the lazy dog.
+The fox is  running fast to catch its prey. Suddenly , it sees the prey and jumps over it . 
+The pray escapes and the fox continues to run.
+The dog wakes up and barks at the fox.
+The fox runs away and the dog goes back to sleep.
+---
+
+#Tokenize the text into sentences
+sentence = sent_tokenize( text )
+
+#Romove stopwords and stem the words in each sentence
+stemmerr = PorterStemmer()
+stop_words = set(stopwords.words('english'))
+words = []
+for sentence in sentence :
+    for word in nltk.word_tokenize(sentence):
+        if word not in stop_words and word.isalpha():
+            words.append(stemmer.stem(word))
+
+#get the count of frequency of each word in the text
+freq_dist = nltk.FreqDist(words)
+
+
+#get the top 10 most frequency words in the text
+top_words = [word[0] for word in freq_dist.most_common(10)]
+
+
+#Create a summary by selecting the 3 sentences with the most frequent words
+simmary = []
+for sentence in sentence:
+    sentence_words = nltk.word_tokenize(sentence.lower())
+sentence_score = 0
+for word insentence words:
+    if stemmer.stem(wors) in top_words:
+        sentence_score += 1
+    summary.append((sentence, sentence_score))
+    
+    
+#Print the summary
+ for sentence in nlargest(3, summary, key=lambda x: x[1]):
+     print(sentence[0])
+
+
+
+
+
+
+
+
+
+
+
+
